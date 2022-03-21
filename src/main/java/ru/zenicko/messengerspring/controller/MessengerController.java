@@ -3,8 +3,8 @@ package ru.zenicko.messengerspring.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.zenicko.messengerspring.domain.LoginInfo;
-import ru.zenicko.messengerspring.domain.UserID;
+import ru.zenicko.messengerspring.domain.request.LoginInfo;
+import ru.zenicko.messengerspring.domain.response.UserID;
 import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
 import ru.zenicko.messengerspring.exception.invaliduserdata.InvalidUserDataException;
 

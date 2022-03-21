@@ -1,4 +1,4 @@
-package ru.zenicko.messengerspring.domain;
+package ru.zenicko.messengerspring.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
