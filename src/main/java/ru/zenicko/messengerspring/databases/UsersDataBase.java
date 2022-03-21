@@ -5,11 +5,10 @@ import org.aeonbits.owner.ConfigFactory;
 import ru.zenicko.messengerspring.config.project.ProjectConfig;
 import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,19 @@ public class UsersDataBase {
     String pathUsersDataBase;
     private long _ID = 1;
 
-    public UsersDataBase() {
+    public UsersDataBase() throws Exception {
         projectConfig = ConfigFactory.create(ProjectConfig.class);
         pathUsersDataBase = projectConfig.pathUsersDataBase();
+
+        File file = new File(pathUsersDataBase);
+        if (file.isFile()) {
+            List<String[]> list = readAllRows();
+            if (!list.isEmpty()) {
+                long max = list.stream().map(el -> el[0]).mapToLong(Long::valueOf).max().getAsLong();
+                _ID = max + 1;
+            }
+        }
+
     }
 
     public long getID() {

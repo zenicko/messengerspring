@@ -13,6 +13,6 @@ public class InvalidUserDataControllerAdvice {
     @ExceptionHandler(InvalidUserDataException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleException(InvalidUserDataException exception) {
-        return String.format("Status code %s \n %s\n", HttpStatus.BAD_REQUEST, exception.getMessage()) ;
+        return String.format("Status code %s \n %s\n", HttpStatus.BAD_REQUEST, exception.getMessage());
     }
 }

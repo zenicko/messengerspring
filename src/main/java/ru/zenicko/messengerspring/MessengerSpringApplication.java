@@ -6,12 +6,11 @@ import ru.zenicko.messengerspring.databases.UsersDataBase;
 
 @SpringBootApplication
 public class MessengerSpringApplication {
-	public static UsersDataBase usersDataBase = new UsersDataBase();
+    public static UsersDataBase usersDataBase;
 
-	public static void main(String[] args) {
-
-
-		SpringApplication.run(MessengerSpringApplication.class, args);
-	}
+    public static void main(String[] args) throws Exception {
+        usersDataBase = new UsersDataBase();
+        SpringApplication.run(MessengerSpringApplication.class, args);
+    }
 
 }
