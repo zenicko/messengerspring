@@ -65,7 +65,7 @@ public class UsersDataBase {
     private String[] convertModelToStringArray(UsersDataBaseModel usersDataBaseModel) {
         String[] row = new String[3];
         row[0] = String.valueOf(usersDataBaseModel.getId());
-        row[1] = usersDataBaseModel.getFio();
+        row[1] = usersDataBaseModel.getUserName();
         row[2] = usersDataBaseModel.getPassword();
 
         return row;

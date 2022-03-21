@@ -18,7 +18,7 @@ public class MessengerController {
         UsersDataBaseModel user = new UsersDataBaseModel();
 
         if (loginInfo.isFullFio() && loginInfo.isFullPassword()) {
-            user.setFio(loginInfo.getUsername());
+            user.setUserName(loginInfo.getUsername());
             user.setPassword(loginInfo.getPassword());
             user.setId(usersDataBase.getID());
             usersDataBase.insert(user);
@@ -31,6 +31,8 @@ public class MessengerController {
             throw new InvalidUserDataException();
         }
     }
+
+
 
 }
 

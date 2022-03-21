@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsersDataBaseModel {
-    private String password;
     private long id;
-    private String fio;
+    private String userName;
+    private String password;
 }
