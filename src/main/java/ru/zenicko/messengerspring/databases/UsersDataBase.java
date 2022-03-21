@@ -16,10 +16,15 @@ import java.util.List;
 public class UsersDataBase {
     ProjectConfig projectConfig;
     String pathUsersDataBase;
+    private long _ID = 1;
 
     public UsersDataBase() {
         projectConfig = ConfigFactory.create(ProjectConfig.class);
         pathUsersDataBase = projectConfig.pathUsersDataBase();
+    }
+
+    public long getID() {
+        return _ID;
     }
 
     public boolean IsExistID(long id) throws Exception {
@@ -37,6 +42,8 @@ public class UsersDataBase {
         CSVWriter writer = new CSVWriter(new FileWriter(path, true));
         writer.writeNext(row);
         writer.close();
+        _ID++;
+
         return true;
     }
 

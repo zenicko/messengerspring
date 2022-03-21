@@ -11,9 +11,6 @@ gradlew
 gradle/
 src/main/resources/configs/project/project.properties
 
-# Move to test/
-src/main/java/ru/zenicko/messengerspring/databases/Test*
-
 ### STS ###
 .apt_generated
 .classpath
