@@ -10,6 +10,7 @@ gradlew.bat
 gradlew
 gradle/
 src/main/resources/configs/project/project.properties
+*.log
 
 ### STS ###
 .apt_generated

@@ -1,14 +1,13 @@
 package ru.zenicko.messengerspring.domain.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class LoginInfo {
     private String username;
     private String password;

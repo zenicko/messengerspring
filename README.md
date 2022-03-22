@@ -46,7 +46,7 @@ project.Path.messagesDataBase - the path to users database
 1. [Reading a CSV File into an Array](https://www.baeldung.com/java-csv-file-array)
 2. [Basic usage](http://owner.aeonbits.org/docs/usage/)
 3. [Introduction to OpenCSV](https://www.baeldung.com/opencsv)
-4. []()
+4. [Ломбок @Builder с наследованием](https://javascopes.com/lombok-builder-inheritance-bce31ecd/)
 5. []()
 6. []()
 7. []()

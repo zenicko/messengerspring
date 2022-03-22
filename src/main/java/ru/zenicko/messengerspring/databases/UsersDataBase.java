@@ -5,10 +5,7 @@ import org.aeonbits.owner.ConfigFactory;
 import ru.zenicko.messengerspring.config.project.ProjectConfig;
 import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +19,16 @@ public class UsersDataBase {
         pathUsersDataBase = projectConfig.pathUsersDataBase();
 
         File file = new File(pathUsersDataBase);
+        // Check a file of Message database is existed and if it needs to create
+
+        if (!file.isFile()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         if (file.isFile()) {
             List<String[]> list = readAllRows();
             if (!list.isEmpty()) {
@@ -37,14 +44,22 @@ public class UsersDataBase {
     }
 
     public boolean IsExistID(long id) throws Exception {
+        String userName = getUserName(id);
+        if (userName == null) return false;
+        if (userName.equals("")) return false;
+
+        return true;
+    }
+
+    public String getUserName(long id) throws Exception {
         List<String[]> list = readAllRows();
-        if (list.isEmpty()) return false;
+        if (list.isEmpty()) return null;
 
         for (String[] line : list) {
-            if (line[0].equals(String.valueOf(id))) return true;
+            if (line[0].equals(String.valueOf(id))) return line[0];
 
         }
-        return false;
+        return "";
     }
 
     private boolean csvWriterLine(String[] row, String path) throws Exception {
@@ -59,13 +74,14 @@ public class UsersDataBase {
     /***
      * Inside voice: It's a stoooopid code!
      * Me: I promise to refactoring it :)
-     * @param usersDataBaseModel
+     * @param usersDataBaseModel the object of class UsersDataBaseModel
      * @return
      */
     private String[] convertModelToStringArray(UsersDataBaseModel usersDataBaseModel) {
         String[] row = new String[3];
+
         row[0] = String.valueOf(usersDataBaseModel.getId());
-        row[1] = usersDataBaseModel.getUserName();
+        row[1] = usersDataBaseModel.getUsername();
         row[2] = usersDataBaseModel.getPassword();
 
         return row;

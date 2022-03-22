@@ -1,16 +1,17 @@
 package ru.zenicko.messengerspring.domain.databases;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import ru.zenicko.messengerspring.domain.request.Message;
 
+import java.util.Date;
+
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class MessagesDataBaseModel extends Message {
-    private Data data;
+    private Date date;
 }
 
