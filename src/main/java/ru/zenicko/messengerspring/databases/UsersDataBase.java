@@ -4,6 +4,7 @@ import com.opencsv.*;
 import org.aeonbits.owner.ConfigFactory;
 import ru.zenicko.messengerspring.config.project.ProjectConfig;
 import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
+import ru.zenicko.messengerspring.domain.response.UserName;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -44,22 +45,25 @@ public class UsersDataBase {
     }
 
     public boolean IsExistID(long id) throws Exception {
-        String userName = getUserName(id);
+        UserName userName = getUserName(id);
         if (userName == null) return false;
-        if (userName.equals("")) return false;
 
         return true;
     }
 
-    public String getUserName(long id) throws Exception {
+    public UserName getUserName(long id) throws Exception {
+        UserName userName = new UserName();
+
         List<String[]> list = readAllRows();
         if (list.isEmpty()) return null;
 
         for (String[] line : list) {
-            if (line[0].equals(String.valueOf(id))) return line[0];
-
+            if (line[0].equals(String.valueOf(id))) {
+                userName.setUserName(line[1]);
+                return userName;
+            }
         }
-        return "";
+        return null;
     }
 
     private boolean csvWriterLine(String[] row, String path) throws Exception {

@@ -1,11 +1,14 @@
 package ru.zenicko.messengerspring.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
 import ru.zenicko.messengerspring.domain.request.LoginInfo;
 import ru.zenicko.messengerspring.domain.response.UserID;
-import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
+import ru.zenicko.messengerspring.domain.response.UserName;
+import ru.zenicko.messengerspring.exception.invalisiduser.UserIsNotExistException;
 import ru.zenicko.messengerspring.exception.invaliduserdata.InvalidUserDataException;
 
 import static ru.zenicko.messengerspring.MessengerSpringApplication.usersDataBase;
@@ -30,6 +33,16 @@ public class MessengerController {
         } else {
             throw new InvalidUserDataException();
         }
+    }
+
+    @GetMapping("user/id")
+    public UserName getUserID(@RequestBody UserID userID) throws Exception {
+        UserName userName = usersDataBase.getUserName(userID.getId());
+        if (userName == null)
+            throw new UserIsNotExistException(String.valueOf(userID.getId()));
+
+        return userName;
+
     }
 
 }
