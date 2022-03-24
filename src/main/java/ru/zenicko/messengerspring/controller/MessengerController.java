@@ -8,8 +8,10 @@ import ru.zenicko.messengerspring.domain.databases.MessagesDataBaseModel;
 import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
 import ru.zenicko.messengerspring.domain.request.LoginInfo;
 import ru.zenicko.messengerspring.domain.request.Message;
+import ru.zenicko.messengerspring.domain.response.Messages;
 import ru.zenicko.messengerspring.domain.response.UserID;
 import ru.zenicko.messengerspring.domain.response.UserName;
+import ru.zenicko.messengerspring.exception.invalidusernameexception.InvalidUserNameException;
 import ru.zenicko.messengerspring.exception.invalisiduser.UserIsNotExistException;
 import ru.zenicko.messengerspring.exception.invaliduserdata.InvalidUserDataException;
 
@@ -63,6 +65,15 @@ public class MessengerController {
                         build();
 
         messagesDataBase.insert(messagesDataBaseModel);
+    }
+    @GetMapping("message/id")
+    public Messages getMessages(@RequestBody UserID userId) throws Exception {
+
+        Messages messages = messagesDataBase.getMessages(userId);
+        if (messages.getMessages().isEmpty()) throw new InvalidUserNameException(userId);
+
+        return messages;
+
     }
 
 }

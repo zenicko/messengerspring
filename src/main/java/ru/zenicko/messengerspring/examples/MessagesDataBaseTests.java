@@ -6,6 +6,7 @@ import ru.zenicko.messengerspring.domain.databases.MessagesDataBaseModel;
 import ru.zenicko.messengerspring.domain.databases.UsersDataBaseModel;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class MessagesDataBaseTests {
     public static MessagesDataBase messagesDataBase;

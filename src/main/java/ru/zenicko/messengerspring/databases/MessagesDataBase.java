@@ -1,13 +1,18 @@
 package ru.zenicko.messengerspring.databases;
 
-import com.opencsv.CSVWriter;
+import com.opencsv.*;
 import org.aeonbits.owner.ConfigFactory;
 import ru.zenicko.messengerspring.config.project.ProjectConfig;
 import ru.zenicko.messengerspring.domain.databases.MessagesDataBaseModel;
+import ru.zenicko.messengerspring.domain.response.Messages;
+import ru.zenicko.messengerspring.domain.response.UserID;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class MessagesDataBase {
     UsersDataBase usersDataBase;
@@ -44,6 +49,7 @@ public class MessagesDataBase {
         return row;
 
     }
+
     private boolean csvWriterLine(String[] row, String path) throws Exception {
         CSVWriter writer = new CSVWriter(new FileWriter(path, true));
         writer.writeNext(row);
@@ -60,4 +66,56 @@ public class MessagesDataBase {
         return csvWriterLine(fromModelToList(messagesDataBaseModel), pathMessagesDataBase);
     }
 
+    /**
+     * The method return the list of messages or null.
+     *
+     * @param userId
+     * @return
+     * @author Zenicko
+     */
+    public Messages getMessages(UserID userId) throws Exception {
+        Messages messages = new Messages();
+        List<String[]> rows = readAllRows();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM d H:m:s z y", Locale.ENGLISH);
+
+        if (rows == null || rows.isEmpty()) return null;
+
+        for (String[] row : rows) {
+            if (row[1].equals(String.valueOf(userId.getId()))) {
+                MessagesDataBaseModel message = new MessagesDataBaseModel();
+                message.setDate(formatter.parse(row[0]));
+
+                message.setIdFrom(Long.parseLong(row[1]));
+                message.setUserNameFrom(row[2]);
+
+                message.setIdTo(Long.parseLong(row[3]));
+                message.setUserNameTo(row[4]);
+
+                message.setMessage(row[5]);
+
+                messages.add(message);
+            }
+        }
+        return messages;
+    }
+
+    private List<String[]> readAllRows() throws Exception {
+        Reader reader = new FileReader(pathMessagesDataBase);
+        CSVParser parser = new CSVParserBuilder()
+                .withSeparator(',')
+                .withIgnoreQuotations(true)
+                .build();
+
+        CSVReader csvReader = new CSVReaderBuilder(reader)
+                //        .withSkipLines(0)
+                .withCSVParser(parser)
+                .build();
+
+        List<String[]> list = new ArrayList<String[]>();
+        list = csvReader.readAll();
+        reader.close();
+        csvReader.close();
+        return list;
+    }
 }
